@@ -1,4 +1,4 @@
---require "lovedebug"
+require "lovedebug"
 
 dofile "Z80.lua"
 
