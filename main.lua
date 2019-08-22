@@ -339,11 +339,11 @@ function love.update(dt)
       end
 
       if process_key("pageup") then
-         ram_offset = ram_offset - 256 % 65536
+         ram_offset = (ram_offset - 256) % 65536
       end
 
       if process_key("pagedown") then
-         ram_offset = ram_offset + 256 % 65536
+         ram_offset = (ram_offset + 256) % 65536
       end
 
       if process_key("f9") then
@@ -360,49 +360,50 @@ end
 function love.draw()
    love.graphics.scale(zoom)
 
+   local format = string.format
    for i=0,15 do
-      printxy(string.format("%2.2x", i), 5+i*3, 0, {0.1, 0.1, 1})
+      printxy(format("%2.2x", i), 5+i*3, 0, {0.1, 0.1, 1})
    end
 
    for i=0,15 do
-      printxy(string.format("%4.4x", ram_offset + i*16), 0, i+1, {0.1, 0.1, 1})
+      printxy(format("%4.4x", ram_offset + i*16), 0, i+1, {0.1, 0.1, 1})
    end
 
    for i=0,15 do
       for j=0,15 do
          if z80.pc == ram_offset + i*16+j then
-            printxy(string.format("%2.2x", mem:mem_read(ram_offset + i*16+j)), 5+j*3, i+1, {1,0,1})
+            printxy(format("%2.2x", mem:mem_read(ram_offset + i*16+j)), 5+j*3, i+1, {1,0,1})
          else
-            printxy(string.format("%2.2x", mem:mem_read(ram_offset + i*16+j)), 5+j*3, i+1)
+            printxy(format("%2.2x", mem:mem_read(ram_offset + i*16+j)), 5+j*3, i+1)
          end
       end
    end
 
    printxy("A   B  C   D  E   H  L   IX   IY   PC   SP   SZYHXPNC  I   R", 0, 17, {0.2, 0.8, 0.2})
 
-   printxy(string.format("%2.2x", z80.a), 0, 18)
+   printxy(format("%2.2x", z80.a), 0, 18)
 
-   printxy(string.format("%2.2x", z80.b), 4, 18)
-   printxy(string.format("%2.2x", z80.c), 7, 18)
+   printxy(format("%2.2x", z80.b), 4, 18)
+   printxy(format("%2.2x", z80.c), 7, 18)
 
-   printxy(string.format("%2.2x", z80.d), 11, 18)
-   printxy(string.format("%2.2x", z80.e), 14, 18)
+   printxy(format("%2.2x", z80.d), 11, 18)
+   printxy(format("%2.2x", z80.e), 14, 18)
 
-   printxy(string.format("%2.2x", z80.h), 18, 18)
-   printxy(string.format("%2.2x", z80.l), 21, 18)
+   printxy(format("%2.2x", z80.h), 18, 18)
+   printxy(format("%2.2x", z80.l), 21, 18)
 
-   printxy(string.format("%4.4x", z80.ix), 25, 18)
-   printxy(string.format("%4.4x", z80.iy), 30, 18)
+   printxy(format("%4.4x", z80.ix), 25, 18)
+   printxy(format("%4.4x", z80.iy), 30, 18)
 
-   printxy(string.format("%4.4x", z80.pc), 35, 18)
-   printxy(string.format("%4.4x", z80.sp), 40, 18)
+   printxy(format("%4.4x", z80.pc), 35, 18)
+   printxy(format("%4.4x", z80.sp), 40, 18)
 
    for i,name in ipairs({"S", "Z", "Y", "H", "X", "P", "N", "C"}) do
-      printxy(string.format(z80.flags[name] and 1 or 0), 44+i, 18)
+      printxy(format(z80.flags[name] and 1 or 0), 44+i, 18)
    end
 
-   printxy(string.format("%2.2x", z80.i), 55, 18)
-   printxy(string.format("%2.2x", z80.r), 59, 18)
+   printxy(format("%2.2x", z80.i), 55, 18)
+   printxy(format("%2.2x", z80.r), 59, 18)
 
    for i=#console_text,1,-1 do
       printxy(console_text[i], 0, 27-i)
