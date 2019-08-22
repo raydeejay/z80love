@@ -18,6 +18,8 @@ No IN/OUT either.
     F10 - Step over the instruction at PC
     F1 - Switch to REPL mode
     F2 - Run from PC
+    F3 - Save to snapshot.mem
+    F4 - Restore from snapshot.mem
 
 ### Commands
     \> nnnn - set PC to nnnn

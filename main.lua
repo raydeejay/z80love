@@ -18,7 +18,7 @@ local shifted_keys = {
 }
 
 -- can't really run even as fast as a Z80? this hits some sweet spot...
-frames = 10000
+frames = 20000
 
 local ram_offset = 0
 local console_text = {}
@@ -344,6 +344,22 @@ function love.update(dt)
 
       if process_key("pagedown") then
          ram_offset = (ram_offset + 256) % 65536
+      end
+
+      if process_key("f3") then
+         local file,errorString,byte = io.open("snapshot.mem", "wb"),nil
+         for i=0,65535 do
+            file:write(string.char(mem:mem_read(i)))
+         end
+         io.close(file)
+      end
+
+      if process_key("f4") then
+         local file,errorString,byte = io.open("snapshot.mem", "rb"),nil
+         for i=0,65535 do
+            mem:mem_write(i, string.byte(file:read(1)))
+         end
+         io.close(file)
       end
 
       if process_key("f9") then
